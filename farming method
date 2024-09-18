@@ -1,0 +1,34 @@
+import mouse
+import keyboard
+import win32api
+import random
+import time
+
+def move_and_click():
+    x = random.randint(415, 1000)
+    y = random.randint(223, 1000)
+    print(f"Moving to ({x}, {y})")
+    mouse.move(x, y, duration=0.001)  # Fast movement
+    mouse.click()
+
+def main():
+    print("Press 'q' to start and 'e' to stop.")
+    keyboard.wait('q')  # Wait for the 'q' key to start
+    print("Script started. Press 'e' to stop.")
+    
+    while True:
+        try:
+            if keyboard.is_pressed('e'):  # Check if 'e' key is pressed to stop
+                print("Script stopped.")
+                break
+            state = win32api.GetKeyState(0x02)
+            if state < 0:
+                break
+            move_and_click()
+            time.sleep(0.01)  # Very short delay for faster execution
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            break
+
+if __name__ == "__main__":
+    main()
